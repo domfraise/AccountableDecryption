@@ -22,9 +22,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 
-//adding some new commets here
+
 /**
  * Access and modification of the database for the blockchain
+ * 
  * Schema:
  * Tree(node,left,right,size_when_created)
  * Log(leaf_value,index)
@@ -71,16 +72,32 @@ public class Database {
 	
 	
 
+	/**
+	 * Calulates log to a given base log(x) to base base
+	 * @param x int value to have the log taken of
+	 * @param base int base of logarithm
+	 * @return double log_base(x)
+	 */
 	static double log(int x, int base)
 	{
 		return (Math.log(x) / Math.log(base));
 	}
 
+	/**
+	 * gets the next power of 2 above or equal to a given number
+	 * @param n int input value
+	 * @return int The next square number that is >= n
+	 */
 	public static int getPowOf2(int n) {
 		return  (int)Math.pow(2,(int)Math.ceil(log(n,2)));
 	}
 
 
+	/**
+	 * Checks if a value is a power of 2
+	 * @param i value to be checked
+	 * @return true is i is a power of 2, otherwise false
+	 */
 	public static boolean isPow2(int i){
 		return (i & (i - 1)) == 0;
 	}
@@ -134,6 +151,13 @@ public class Database {
 		return root;
 	}
 
+	/**
+	 * Gets The size of the tree when a a given node was created
+	 * @param conn DB COnnection
+	 * @param leaf String Value of a leaf to be queried
+	 * @return int the number of leaf entries in the tree when the leaf was created
+	 * @throws SQLException
+	 */
 	public static int getSizeWhenCreated(Connection conn,String leaf) throws SQLException{
 		PreparedStatement getNode = conn.prepareStatement("SELECT size_when_created FROM tree WHERE node = ?");
 		getNode.setString(1, leaf);
@@ -164,6 +188,14 @@ public class Database {
 		return node.getInt(2);
 	}
 
+	
+	/**
+	 * Get owner of a file
+	 * @param conn
+	 * @param value String Filehash in files table
+	 * @return String username of owner of file
+	 * @throws SQLException
+	 */
 	public static String getOwner(Connection conn,String value) throws SQLException{
 		PreparedStatement getNode = conn.prepareStatement("SELECT owner FROM files WHERE hash LIKE ? ");
 		getNode.setString(1, value);
@@ -174,6 +206,14 @@ public class Database {
 		node.next();
 		return node.getString(1);
 	}
+	
+	/**
+	 * Gets timestamp on file
+	 * @param conn
+	 * @param node String node get time stamp of
+	 * @return Timestamp Timestamp of when file was created
+	 * @throws SQLException
+	 */
 	public static Timestamp getFileTimestamp(Connection conn,String node) throws SQLException{
 		PreparedStatement getNode = conn.prepareStatement("SELECT timestamp FROM Files WHERE hash = ? ");
 		getNode.setString(1, node);
@@ -265,6 +305,13 @@ public class Database {
 		return timestamp;
 	}
 
+	/**
+	 * Gets bytes of a file from DB
+	 * @param conn
+	 * @param hash String filehash of file to be fetched
+	 * @return 
+	 * @throws SQLException
+	 */
 	public static byte[] getFileBytes(Connection conn,String hash) throws SQLException{
 		PreparedStatement getFile = conn.prepareStatement("SELECT file FROM Files WHERE hash = ?");
 		getFile.setString(1, hash);
@@ -277,6 +324,15 @@ public class Database {
 		return fileBytes;	
 	}
 	
+	/**
+	 * Insert a test file at a given date
+	 * @param conn
+	 * @param user String owner of file
+	 * @param file byte[] encrypted file bytes
+	 * @param timestamp Timestamp When file is said to have been created
+	 * @throws IOException
+	 * @throws SQLException
+	 */
 	public static void insertFileAtDate(Connection conn,String user,byte[] file,Timestamp timestamp) throws IOException, SQLException{
 		
 		PreparedStatement addFile = conn.prepareStatement("INSERT INTO Files (owner,file,timestamp,hash) VALUES(?,?,?,?)");
@@ -478,6 +534,17 @@ public class Database {
 	//create propper time stamp from entries
 
 
+	/**
+	 * Searches for files between a two dates and times
+	 * @param conn
+	 * @param keyword
+	 * @param startDate
+	 * @param endDate
+	 * @param startTime
+	 * @param endTime
+	 * @return
+	 * @throws SQLException
+	 */
 	public static ArrayList<String[]> adminSearch(Connection conn,String keyword,String startDate, String endDate, String startTime,String endTime) throws SQLException{
 		if(keyword.equals("") || startDate.equals("") || endDate.equals("") ||startTime.equals("")||endTime.equals("")){
 			return new ArrayList<String[]>();
