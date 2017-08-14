@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>Search</title>
+
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3/css/bulma.css">
+</head>
+
+<body>
+
+
+	<section class="hero is-light">
+		<div class="hero-body">
+			<div class="container" align="center">
+				<h1 class="title">Proofs</h1>
+				<br>
+				<h2 class="subtitle">Generate cryptographic proofs for your
+					peace of mind</h2>
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+
+		<div class="tabs is-boxed is-centered">
+			<ul>
+				<li><a href=proofsInfo> <span>Information</span>
+				</a></li>
+				<li><a href="proofsPresence"> <span>Proof of
+							Presence</span>
+				</a></li>
+				<li class="is-active"><a href="proofsExtension"> <span>Proof
+							of Extension</span>
+				</a></li>
+				<li><a href="proofsAbsence"> <span>Proof of Absence</span>
+				</a></li>
+				<li><a href="proofsDevice"> <span>Secure Device</span>
+				</a></li>
+			</ul>
+		</div>
+		<div class="columns">
+			<div class="column">
+				<aside class="menu">
+					<p class="menu-label">General</p>
+					<ul class="menu-list">
+						<li><a href="\">Home</a></li>
+						<li><a href=proofsInfo>Proofs</a></li>
+					</ul>
+					<p class="menu-label">Admin</p>
+					<ul class="menu-list">
+						<li><a href="searchPage">Search</a></li>
+						<li><a href="basket">Decryption Basket</a></li>
+						<li><a href="decryptedFiles">Decrypted Files</a></li>
+					</ul>
+					<p class="menu-label">User</p>
+					<ul class="menu-list">
+						<li><a href=userInspection>Inspect</a></li>
+						<li><a href="graphical">Graphical</a></li>
+					</ul>
+				</aside>
+			</div>
+			<div class="column is-two-thirds">
+				<form action="getProofExtension" method="post">
+					<div class="control" align="center">
+						<label class="label">Enter The Older RTH</label> <input
+							class="input" type="text" id="old" name="old"
+							placeholder="e.g. ae3429272efe63b78fa8d9a5c36a5164522a66146089487dd1a7a4b48798627f">
+					</div>
+					<div class="control" align="center">
+						<label class="label">Enter The Newer RTH</label> <input
+							class="input" type="text" name="new" id="new"
+							placeholder="e.g. ae3429272efe63b78fa8d9a5c36a5164522a66146089487dd1a7a4b48798627f">
+					</div>
+					<button class="button is-primary" type="submit" formnovalidate
+						old="cancel" new="cancel">Get Proof</button>
+				</form>
+
+				<br>
+				<!-- proof -->
+				<br>
+				<h1 class="title">Proof Of Extension Format</h1>
+				<h2 class="subtitle">Top level objects:</h2>
+				<ol>
+					<li><code> OldRTH type:String //The root tree hash of
+							intial, older tree</code></li>
+					<li><code> NewRTH type:String //The root tree hash of
+							newer tree to be proven to be an append only version of OldRTH
+							tree</code></li>
+					<li><code> OldProof type:JSONObject //A JSON tree
+							containing the tree that should recreate OldRTH</code></li>
+					<li><code> NewProof type:JSONObject //A JSON tree
+							containing the tree that should recreate NewRTH</code></li>
+				</ol>
+
+				<br>
+				<h2 class="subtitle">JSON Tree</h2>
+
+				Each node contains either
+				<code>Left type:JSONObject and Right type:JSONObject</code>
+				or
+				<code>Hash type:String //An intermediate node value used to
+					recreate RTH</code>
+			</div>
+			<div class="column"></div>
+		</div>
+
+	</section>
+
+</body>
+</html>

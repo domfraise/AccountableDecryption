@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>Search</title>
+
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3/css/bulma.css">
+</head>
+
+<body>
+
+
+	<section class="hero is-primary">
+		<div class="hero-body">
+			<div class="container" align="center">
+				<h1 class="title">Decryption Basket</h1>
+				<br>
+				<h2 class="subtitle">View and edit basket</h2>
+			</div>
+		</div>
+	</section>
+	<br>
+	<section class="section">
+		<div class="columns">
+			<div class="column">
+
+				<aside class="menu">
+					<p class="menu-label">General</p>
+					<ul class="menu-list">
+						<li><a href="\">Home</a></li>
+						<li><a href=proofsInfo>Proofs</a></li>
+					</ul>
+					<p class="menu-label">Admin</p>
+					<ul class="menu-list">
+						<li><a href="searchPage">Search</a></li>
+						<li><a href="basket">Decryption Basket</a></li>
+						<li><a href="decryptedFiles">Decrypted Files</a></li>
+					</ul>
+					<p class="menu-label">User</p>
+					<ul class="menu-list">
+						<li><a href=userInspection>Inspect</a></li>
+						<li><a href="graphical">Graphical</a></li>
+					</ul>
+				</aside>
+
+			</div>
+			<div class="column">
+				<form action="requestDec" method="post">
+					<div class="columns">
+						<div class="column">
+							<div class="control" align="center">
+								<label class="label">Enter Your Username</label> <input
+									class="input" type="text" name="name"
+									placeholder="e.g. JaneSmith">
+							</div>
+						</div>
+						<div class="column">
+							<div class="control" align="center">
+								<label class="label">Enter Your Company</label> <input
+									class="input" type="text" name="company"
+									placeholder="e.g. Google">
+							</div>
+						</div>
+					</div>
+					<div align="center">
+						<button class="button is-primary" type="submit">Request
+							Decryptions</button>
+					</div>
+				</form>
+				<form action="del" method="post">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>User</th>
+								<th>TimeStamp</th>
+								<th>Justification</th>
+								<th>FileHash</th>
+								<th>Remove</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!--table-->
+						</tbody>
+					</table>
+				</form>
+
+			</div>
+			<div class="column"></div>
+		</div>
+
+	</section>
+</body>
+</html>

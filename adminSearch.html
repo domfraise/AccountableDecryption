@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>Search</title>
+
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3/css/bulma.css">
+</head>
+<body>
+	<section class="hero is-primary">
+		<div class="hero-body">
+			<div class="container" align="center">
+				<h1 class="title">Search</h1>
+				<br>
+				<h2 class="subtitle">Search for files to decrypt by user, time
+					and date</h2>
+			</div>
+		</div>
+	</section>
+	<br>
+	<section class="section">
+		<div class="columns">
+			<div class="column">
+				<aside class="menu">
+					<p class="menu-label">General</p>
+					<ul class="menu-list">
+						<li><a href="\">Home</a></li>
+						<li><a href=proofsInfo>Proofs</a></li>
+					</ul>
+					<p class="menu-label">Admin</p>
+					<ul class="menu-list">
+						<li><a href="searchPage">Search</a></li>
+						<li><a href="basket">Decryption Basket</a></li>
+						<li><a href="decryptedFiles">Decrypted Files</a></li>
+					</ul>
+					<p class="menu-label">User</p>
+					<ul class="menu-list">
+						<li><a href=userInspection>Inspect</a></li>
+						<li><a href="graphical">Graphical</a></li>
+					</ul>
+				</aside>
+			</div>
+			<div class="column" align="center">
+				<br>
+				<form action="search" method="post">
+					<div class="control" align="center">
+						<label class="label">Username</label> <input class="input"
+							type="text" name="name" placeholder="Keyword">
+					</div>
+					<br>
+					<div class="columns">
+						<div class="column">
+							<div class="control">
+								<label class="label">Start Date</label> <input class="input"
+									type="text" name="startDate" placeholder="DD/MM/YYYY">
+							</div>
+							<br>
+							<div class="control">
+								<label class="label">Start Time</label> <input class="input"
+									type="text" name="startTime" placeholder="hh:mm">
+							</div>
+						</div>
+						<div class="column">
+
+							<div class="control">
+								<label class="label">End Date</label> <input class="input"
+									type="text" name="endDate" placeholder="DD/MM/YYYY">
+							</div>
+							<br>
+							<div class="control">
+								<label class="label">End Time</label> <input class="input"
+									type="text" name="endTime" placeholder="hh:mm">
+							</div>
+						</div>
+						<br>
+					</div>
+					<button class="button is-primary" type="submit" value="submit"
+						name="search">Search</button>
+				</form>
+			</div>
+			<div class="column "></div>
+		</div>
+		<form action="addToBasket" method="post">
+			<div>
+				<!--table-->
+			</div>
+		</form>
+	</section>
+</body>
+</html>

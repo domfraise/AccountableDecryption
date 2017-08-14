@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>Search</title>
+
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3/css/bulma.css">
+</head>
+
+<body>
+
+
+	<section class="hero is-light">
+		<div class="hero-body">
+			<div class="container" align="center">
+				<h1 class="title">Proofs</h1>
+				<br>
+				<h2 class="subtitle">Generate cryptographic proofs for your
+					peace of mind</h2>
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+
+		<div class="tabs is-boxed is-centered">
+			<ul>
+				<li class="is-active"><a href=proofsInfo> <span>Information</span>
+				</a></li>
+				<li><a href="proofsPresence"> <span>Proof of
+							Presence</span>
+				</a></li>
+				<li><a href="proofsExtension"> <span>Proof of
+							Extension</span>
+				</a></li>
+				<li><a href="proofsExtension"> <span>Proof of
+							Absence</span>
+				</a></li>
+					<li><a href="proofsDevice"> <span>Secure
+							Device</span>
+				</a></li>
+			</ul>
+		</div>
+		<div class="columns">
+			<div class="column">
+				<aside class="menu">
+					<p class="menu-label">General</p>
+					<ul class="menu-list">
+						<li><a href="\">Home</a></li>
+						<li><a href=proofsInfo>Proofs</a></li>
+					</ul>
+					<p class="menu-label">Admin</p>
+					<ul class="menu-list">
+						<li><a href="searchPage">Search</a></li>
+						<li><a href="basket">Decryption Basket</a></li>
+						<li><a href="decryptedFiles">Decrypted Files</a></li>
+					</ul>
+					<p class="menu-label">User</p>
+					<ul class="menu-list">
+						<li><a href=userInspection>Inspect</a></li>
+						<li><a href="graphical">Graphical</a></li>
+					</ul>
+				</aside>
+			</div>
+			<div class="column is-two-thirds">
+				<h1 class="title">Information</h1>
+				<h2 class="subtitle">What proofs are and how to use them</h2>
+				<p>
+					Any requests to decrypt any of your data is stored by us in a
+					cryptographic data structure called a <a
+						href=https://en.wikipedia.org/wiki/Merkle_tree>Merkel Tree</a>
+					where each node is the hash of its children. For any collection of
+					entries in a Merkel Tree, there is one unique value know as the
+					Root Tree Hash(RTH), this value uniquely identifies all the entries
+					in the tree. This structure allows you to check if a certain entry
+					is contained within this data structure by generating proofs. You
+					can use these proofs in your own merkel tree to confirm the same
+					RTH is produced by you as by us. The current RTH value is kept by a
+					secure device running on an Intel <a
+						href="https://en.wikipedia.org/wiki/Software_Guard_Extensions">SGX</a>
+					chip. This device is independent and publishes its current RTH
+					along with a signature that you can verify. Each proof that is
+					generated allows you to recreate the RTH that is stored by this
+					device, if your calculated value matches that stored by the SGX you
+					can rest easily knowing the data we are providing you with has not
+					been tampered with.
+				</p>
+				<br>
+				<h2 class="subtitle">Types of Proof</h2>
+				<p>There are 3 types of proofs that are generated here; Proof of
+					Presence, Proof of Extesnsion, and proof of absence.</p>
+				<ul>
+					<li>Presence - This proof takes the value of a leaf in the
+						Merkel tree and a value of a RTH. If the leaf was contained in the
+						tree when the root had the value of RTH it will provide proof of
+						the presence of that leaf</li>
+					<li>Extension - This proof checks to see that one RTH is an
+						append only version of a previous one. That is, the new tree
+						contains all the elements of the old tree in the same order as
+						before. You can use this to ensure we are not editing the tree by
+						requesting a RTH at some point and requesting a new one later, and
+						running this proof on the two RTH's</li>
+					<li>Absence - This proof is different as it does not provide
+						you with a tree, it provides you with a list of all of the leaves
+						in our tree, all of your file hash's (values that will be in the
+						tree if they have been decrypted) so you can compare the two lists
+						to ensure your files are absent from the tree. You can then insert
+						all of the leaves into a Merkel tree of your own and ensure the
+						resulting RTH matches the one published by the secure device.</li>
+				</ul>
+				<br>
+				<h2 class=subtitle>Proof formating</h2>
+				<p>Proofs are provided in the format of a JSON object. At the
+					top level there will always have information on the root tree hash
+					the proof has been generated for, and one or more JSON trees. Each
+					node in a JSON tree has either: keys "Left" and "Right" with the
+					values being another node, or the key "Hash" the the value of the
+					hash stored at this node. The exact layout of each proof can be
+					found on their corresponding tab.</p>
+				<br>
+				<h2 class=subtitle>Proof Verifying</h2>
+				<p>
+					To verify a proof tree you need to ensure that when the value of
+					each node is the the SHA256 hash digest of the left child
+					concatenated with the right. i.e.
+					<code>node = SHA256Hash(node.left || node.right)</code>
+					. Once this has been calculated the value of your root node should
+					match the root given in the JSON file. Once you are convinced that
+					the proof matches the RTH given you can check that the RTH given by
+					us as part of the proof is consistent with that of the secure SGX
+					device.
+				</p>
+			</div>
+			<div class="column"></div>
+		</div>
+
+	</section>
+
+</body>
+</html>
