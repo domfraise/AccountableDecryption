@@ -1,4 +1,4 @@
-package AccountableDec.JavaServer;
+package JavaServer;
 
 import java.io.IOException;
 

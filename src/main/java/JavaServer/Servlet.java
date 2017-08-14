@@ -1,4 +1,4 @@
-package AccountableDec.JavaServer;
+package JavaServer;
 
 import static Database.Database.adminSearch;
 import static Database.Database.getConnection;

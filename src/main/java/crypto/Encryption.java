@@ -74,12 +74,7 @@ public class Encryption {
 
 	}
 	
-	public static PublicKey generatePKFromPem(KeyFactory factory , String filename) throws FileNotFoundException, IOException, InvalidKeySpecException{
-		PemFile pemFile = new PemFile(filename);
-		byte[] content = pemFile.getPemObject().getContent();
-		X509EncodedKeySpec pubKeySpec = new X509EncodedKeySpec(content);
-		return factory.generatePublic(pubKeySpec);
-	}
+
 
 	public static String bytes2String(byte[] bytes) {
 		StringBuilder string = new StringBuilder();
