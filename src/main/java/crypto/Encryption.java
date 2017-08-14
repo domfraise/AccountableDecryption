@@ -23,7 +23,20 @@ import com.google.protobuf.ByteString;
 
 import javax.crypto.Cipher;
 
+/**
+ * Encryption and decryption Functionality
+ * @author Dom
+ *
+ */
+
 public class Encryption {
+	
+	/**
+	 * Encrypts bytes with the response from a gRPC call to the decvice
+	 * @param rawKey ByteString The unstripped response from the gRPC call getEncryptionKey
+	 * @param message byte[] the bytes of message to be encrypted
+	 * @return byte[] encrypted message
+	 */
 	public static byte[] encrypt(ByteString rawKey ,byte[] message){
 		String strippedKey=stripKey(rawKey.toStringUtf8());
 
@@ -49,6 +62,12 @@ public class Encryption {
 
 	}
 	
+	/**
+	 * Decrypts a message - only used for debuggings/testing
+	 * @param rawKey String unstripped key read from pem file
+	 * @param message byte[] encrypted message
+	 * @return encrypted
+	 */
 	public static byte[] decrypt(String rawKey ,byte[] message){
 		String strippedKey=stripPrivateKey(rawKey);
 		
@@ -75,7 +94,11 @@ public class Encryption {
 	}
 	
 
-
+	/**
+	 * Translates a byte array to a hex string
+	 * @param bytes byte[] raw bytes
+	 * @return hex representation of bytes
+	 */
 	public static String bytes2String(byte[] bytes) {
 		StringBuilder string = new StringBuilder();
 		for (byte b : bytes) {
@@ -85,6 +108,7 @@ public class Encryption {
 		return string.toString();
 	}
 
+	
 	public static String stripKey(String key){
 		key = key.replace("-----BEGIN RSA PUBLIC KEY-----\n", "");
 		key = key.replace("-----END RSA PUBLIC KEY-----", "");
