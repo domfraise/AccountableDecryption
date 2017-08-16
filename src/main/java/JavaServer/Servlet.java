@@ -162,18 +162,18 @@ public class Servlet extends HttpServlet {
 			html = html.concat(line);
 			if(line.contains("<!-- device -->")){
 
-				html = html.concat("		<h1 class=\"title\">Current Root Tree Hash</h2>\r\n<p>" + 
+				html = html.concat("		<h1 class=\"title\">Current Root Tree Hash</h2>\r\n  <textarea class=\"textarea is-primary\" >" + 
 						Hex.encodeHexString(rpcClient.getRootTreeHash(ByteString.copyFromUtf8("nonce")).getRth().toByteArray()) + 
-						"				</p><br><br>\r\n" + 
-						"				<h2 class=\"title\">Signature on RTH</h2>\r\n<p>" + 
+						"				</textarea><br><br>\r\n" + 
+						"				<h2 class=\"title\">Signature on RTH</h2>\r\n<textarea class=\"textarea is-primary\">" + 
 						Hex.encodeHexString(rpcClient.getRootTreeHash(ByteString.copyFromUtf8("nonce")).getSig().toByteArray()) + 
-						"				</p><br><br>\r\n" + 
-						"				<h2 class=\"title\">Public Encryption Key</h2>\r\n" + 
+						"				</textarea><br><br>\r\n" + 
+						"				<h2 class=\"title\">Public Encryption Key</h2>\r\n <textarea class=\"textarea is-primary\">" + 
 						rpcClient.getPublicKey(ByteString.copyFromUtf8("nonce")).getRSAEncryptionKey().toStringUtf8() + 
-						"				<br><br>\r\n" + 
-						"				<h2 class=\"title\">Verification Key</h2>\r\n" + 
+						"				</textarea><br><br>\r\n" + 
+						"				<h2 class=\"title\">Verification Key</h2>\r\n <textarea class=\"textarea is-primary\">" + 
 						rpcClient.getPublicKey(ByteString.copyFromUtf8("nonce")).getRSAVerificationKey().toStringUtf8() + 
-						"				<br>");
+						"				</textarea><br>");
 
 			}
 		}
@@ -219,6 +219,7 @@ public class Servlet extends HttpServlet {
 				html = html.concat("<input type=\"hidden\" name=\"name\" value = \""+user+"\">");
 			}
 		}
+		
 		return html;
 	}
 
