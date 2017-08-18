@@ -262,7 +262,7 @@ public class DatabaseTest {
 
 	@Test
 	public void insertFiles() throws IOException, SQLException{
-		String user = "domfraise";
+		String user = "alanjones";
 //		try {
 			//			insertFileAsPath(conn, user, "C:\\Users\\Dom\\Documents\\myfile1.txt");
 			//			insertFileAsPath(conn, user, "C:\\Users\\Dom\\Documents\\myfile2.txt");
@@ -281,27 +281,27 @@ public class DatabaseTest {
 		DeviceClient client = new DeviceClient("localhost", 50051);
 			ByteString nonce = ByteString.copyFromUtf8("nonce");
 			ByteString key = client.getPublicKey(nonce).getRSAEncryptionKey();
-			LocalDate d1 = LocalDate.of(2017, 8, 1);
+			LocalDate d1 = LocalDate.of(2017, 5, 1);
 			Timestamp t1 = Timestamp.valueOf((d1.atStartOfDay()));
-			LocalDate d2 = LocalDate.of(2017, 8, 12);
+			LocalDate d2 = LocalDate.of(2017, 5, 12);
 			Timestamp t2 =Timestamp.valueOf(d2.atStartOfDay());
-			LocalDate d3 = LocalDate.of(2017, 7, 1);
+			LocalDate d3 = LocalDate.of(2017, 6, 1);
 			Timestamp t3 = Timestamp.valueOf(d3.atStartOfDay());
-			LocalDate d4 = LocalDate.of(2017, 7, 11);
+			LocalDate d4 = LocalDate.of(2017, 6, 11);
 			Timestamp t4 = Timestamp.valueOf(d4.atStartOfDay());
-//			Path path = Paths.get("C:\\Users\\Dom\\Desktop\\Location Files\\PlainText\\domfraise1.txt");
-//			byte[] file1 = Files.readAllBytes(path);
-//			file1=Encryption.encrypt(key, file1);
-//			insertFileAtDate(conn, user, file1, t1);
-//			Path path2 = Paths.get("C:\\Users\\Dom\\Desktop\\Location Files\\PlainText\\domfraise2.txt");
-//			byte[] file2 = Files.readAllBytes(path2);
-//			file2=Encryption.encrypt(key, file2);
-//			insertFileAtDate(conn, user, file2, t2);
-//			Path path3 = Paths.get("C:\\Users\\Dom\\Desktop\\Location Files\\PlainText\\domfraise3.txt");
-//			byte[] file3 = Files.readAllBytes(path3);
-//			file3=Encryption.encrypt(key, file3);
-//			insertFileAtDate(conn, user, file3, t3);
-			Path path4 = Paths.get("C:\\Users\\Dom\\Desktop\\Location Files\\PlainText\\domfraise4.txt");
+			Path path = Paths.get("C:\\Users\\Dom\\Desktop\\Location Files\\PlainText\\alanjones1.txt");
+			byte[] file1 = Files.readAllBytes(path);
+			file1=Encryption.encrypt(key, file1);
+			insertFileAtDate(conn, user, file1, t1);
+			Path path2 = Paths.get("C:\\Users\\Dom\\Desktop\\Location Files\\PlainText\\alanjones2.txt");
+			byte[] file2 = Files.readAllBytes(path2);
+			file2=Encryption.encrypt(key, file2);
+			insertFileAtDate(conn, user, file2, t2);
+			Path path3 = Paths.get("C:\\Users\\Dom\\Desktop\\Location Files\\PlainText\\alanjones3.txt");
+			byte[] file3 = Files.readAllBytes(path3);
+			file3=Encryption.encrypt(key, file3);
+			insertFileAtDate(conn, user, file3, t3);
+			Path path4 = Paths.get("C:\\Users\\Dom\\Desktop\\Location Files\\PlainText\\alanjones4.txt");
 			byte[] file4 = Files.readAllBytes(path4);
 			file4=Encryption.encrypt(key, file4);
 			insertFileAtDate(conn, user, file4, t4);

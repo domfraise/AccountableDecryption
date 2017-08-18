@@ -69,8 +69,8 @@ public class Database {
 		return conn;
 
 	}
-	
-	
+
+
 
 	/**
 	 * Calulates log to a given base log(x) to base base
@@ -188,7 +188,7 @@ public class Database {
 		return node.getInt(2);
 	}
 
-	
+
 	/**
 	 * Get owner of a file
 	 * @param conn
@@ -206,7 +206,7 @@ public class Database {
 		node.next();
 		return node.getString(1);
 	}
-	
+
 	/**
 	 * Gets timestamp on file
 	 * @param conn
@@ -323,7 +323,7 @@ public class Database {
 		byte[] fileBytes = file.getBytes(1);
 		return fileBytes;	
 	}
-	
+
 	/**
 	 * Insert a test file at a given date
 	 * @param conn
@@ -334,12 +334,12 @@ public class Database {
 	 * @throws SQLException
 	 */
 	public static void insertFileAtDate(Connection conn,String user,byte[] file,Timestamp timestamp) throws IOException, SQLException{
-		
+
 		PreparedStatement addFile = conn.prepareStatement("INSERT INTO Files (owner,file,timestamp,hash) VALUES(?,?,?,?)");
 		addFile.setString(1, user);
 		addFile.setBytes(2, file);
 		Calendar cal = Calendar.getInstance();
-//		Timestamp timestamp = new Timestamp(cal.getTimeInMillis());
+		//		Timestamp timestamp = new Timestamp(cal.getTimeInMillis());
 		addFile.setObject(3, timestamp,java.sql.Types.TIMESTAMP);
 		addFile.setString(4, TreeOps.hash(file));
 		addFile.executeUpdate();
@@ -546,55 +546,59 @@ public class Database {
 	 * @throws SQLException
 	 */
 	public static ArrayList<String[]> adminSearch(Connection conn,String keyword,String startDate, String endDate, String startTime,String endTime) throws SQLException{
-		if(keyword.equals("") || startDate.equals("") || endDate.equals("") ||startTime.equals("")||endTime.equals("")){
+		try{
+			if(keyword.equals("") || startDate.equals("") || endDate.equals("") ||startTime.equals("")||endTime.equals("")){
+				return new ArrayList<String[]>();
+			}
+			LocalDate start = LocalDate.of(Integer.parseInt(startDate.substring(6,10)), Integer.parseInt(startDate.substring(3,5)), Integer.parseInt(startDate.substring(0,2)));
+			LocalDate end = LocalDate.of(Integer.parseInt(endDate.substring(6,10)), Integer.parseInt(endDate.substring(3,5)), Integer.parseInt(endDate.substring(0,2)));
+
+
+			LocalTime startT = LocalTime.of(Integer.parseInt(startTime.substring(0,2)), Integer.parseInt(startTime.substring(3,5)));
+			LocalTime endT = LocalTime.of(Integer.parseInt(endTime.substring(0,2)), Integer.parseInt(endTime.substring(3,5)));
+
+			PreparedStatement query = conn.prepareStatement("SELECT * FROM files WHERE owner LIKE ? ");
+
+			query.setString(1, keyword);
+
+			ResultSet r = query.executeQuery();
+			ArrayList<String[]> result = new ArrayList<String[]>();
+			while(r.next()){
+				String timestamp = r.getTimestamp(4).toString();
+
+				LocalDate date = LocalDate.of(Integer.parseInt(timestamp.substring(0,4)), Integer.parseInt(timestamp.substring(5,7)), Integer.parseInt(timestamp.substring(8,10)));
+				LocalTime time = LocalTime.of(Integer.parseInt(timestamp.substring(11, 13)),Integer.parseInt(timestamp.substring(14, 16)));
+				if(date.isAfter(start) && date.isBefore(end)){
+					String[] line = new String[3];
+					line[0] = r.getString(2);
+					line[1] = r.getString(4);
+					line[2] = r.getString(5);
+					result.add(line);
+				}else if(date.isEqual(start)){
+					if (time.isAfter(startT)){
+						String[] line = new String[3];
+						line[0] = r.getString(2);
+						line[1] = r.getString(4);
+						line[2] = r.getString(5);
+
+						result.add(line);
+					}	
+				} else if(date.isEqual(end)){
+					if (time.isBefore(endT)){
+						String[] line = new String[3];
+						line[0] = r.getString(2);
+						line[1] = r.getString(4);
+						line[2] = r.getString(5);
+
+						result.add(line);
+					}
+				}
+
+			}
+			return result;
+		}catch(Exception e){
 			return new ArrayList<String[]>();
 		}
-		LocalDate start = LocalDate.of(Integer.parseInt(startDate.substring(6,10)), Integer.parseInt(startDate.substring(3,5)), Integer.parseInt(startDate.substring(0,2)));
-		LocalDate end = LocalDate.of(Integer.parseInt(endDate.substring(6,10)), Integer.parseInt(endDate.substring(3,5)), Integer.parseInt(endDate.substring(0,2)));
-
-		
-		LocalTime startT = LocalTime.of(Integer.parseInt(startTime.substring(0,2)), Integer.parseInt(startTime.substring(3,5)));
-		LocalTime endT = LocalTime.of(Integer.parseInt(endTime.substring(0,2)), Integer.parseInt(endTime.substring(3,5)));
-
-		PreparedStatement query = conn.prepareStatement("SELECT * FROM files WHERE owner LIKE ? ");
-		
-		query.setString(1, keyword);
-
-		ResultSet r = query.executeQuery();
-		ArrayList<String[]> result = new ArrayList<String[]>();
-		while(r.next()){
-			String timestamp = r.getTimestamp(4).toString();
-
-			LocalDate date = LocalDate.of(Integer.parseInt(timestamp.substring(0,4)), Integer.parseInt(timestamp.substring(5,7)), Integer.parseInt(timestamp.substring(8,10)));
-			LocalTime time = LocalTime.of(Integer.parseInt(timestamp.substring(11, 13)),Integer.parseInt(timestamp.substring(14, 16)));
-			if(date.isAfter(start) && date.isBefore(end)){
-				String[] line = new String[3];
-				line[0] = r.getString(2);
-				line[1] = r.getString(4);
-				line[2] = r.getString(5);
-				result.add(line);
-			}else if(date.isEqual(start)){
-				if (time.isAfter(startT)){
-					String[] line = new String[3];
-					line[0] = r.getString(2);
-					line[1] = r.getString(4);
-					line[2] = r.getString(5);
-
-					result.add(line);
-				}	
-			} else if(date.isEqual(end)){
-				if (time.isBefore(endT)){
-					String[] line = new String[3];
-					line[0] = r.getString(2);
-					line[1] = r.getString(4);
-					line[2] = r.getString(5);
-
-					result.add(line);
-				}
-			}
-
-		}
-		return result;
 
 	}
 

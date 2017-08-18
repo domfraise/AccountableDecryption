@@ -119,7 +119,6 @@ public class Servlet extends HttpServlet {
 			if(request.getServletPath().equals("/search")){
 				response.getWriter().println(getSearchResults(request));
 			}else if(request.getServletPath().equals("/addToBasket")){
-				System.out.println("request made");
 				response.getWriter().println(addToBasket(request));
 			}else if(request.getServletPath().equals("/del")){
 				delFromBasket(request);
@@ -466,7 +465,6 @@ public class Servlet extends HttpServlet {
 			//TODO use actual rth from device ^^
 			String rth = Database.getRoot(conn);
 			String name = r.getParameter("name");
-			System.out.println("got to here - servelt - reququesst dec");
 			HashSet<DecryptionRequest> requests;
 			if(!decryptedFiles.containsKey(name)){
 			
@@ -565,14 +563,9 @@ public class Servlet extends HttpServlet {
 	 * @throws FileNotFoundException
 	 */
 	public String addToBasket(HttpServletRequest r) throws FileNotFoundException{
-		//		System.out.println(r.getParameter("name0"));
-
-		System.out.println("meh");
-		System.out.println(r.getParameter("reason0"));
+	
 		Map<String,String[]> params = r.getParameterMap();
-		System.out.println("here");
 		Set<Map.Entry<String, String[]>> entrySet = params.entrySet();
-		System.out.println("there");
 		for(Map.Entry<String, String[]> entry: entrySet){
 			if(entry.getKey().substring(0,5).equals("added") && entry.getValue()[0].equals("on")){
 				String[] item = new String[4];

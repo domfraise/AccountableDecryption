@@ -41,7 +41,7 @@ public class Encryption {
 		String strippedKey=stripKey(rawKey.toStringUtf8());
 
 		byte[] keyBytes = Base64.getDecoder().decode(strippedKey);
-		System.out.println(keyBytes.length);
+		
 		
 		Cipher cipher_RSA;
 		try {
@@ -49,7 +49,7 @@ public class Encryption {
 			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 			X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
 			PublicKey pk = keyFactory.generatePublic(spec);
-			System.out.println(pk.getAlgorithm()+" format : "+pk.getFormat());
+			
 			
 			cipher_RSA.init(Cipher.ENCRYPT_MODE, pk); 
 			return cipher_RSA.doFinal(message);
@@ -72,7 +72,7 @@ public class Encryption {
 		String strippedKey=stripPrivateKey(rawKey);
 		
 		byte[] keyBytes = Base64.getDecoder().decode(strippedKey);
-		System.out.println(keyBytes.length);
+		
 		
 		Cipher cipher_RSA;
 		try {
@@ -80,7 +80,7 @@ public class Encryption {
 			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 			PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
 			PrivateKey pk = keyFactory.generatePrivate(spec);
-			System.out.println(pk.getAlgorithm()+" format : "+pk.getFormat());
+		
 
 			cipher_RSA.init(Cipher.DECRYPT_MODE, pk); 
 			return cipher_RSA.doFinal(message);
