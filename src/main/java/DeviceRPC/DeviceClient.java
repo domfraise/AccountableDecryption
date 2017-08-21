@@ -78,7 +78,6 @@ public class DeviceClient {
 	public Record decryptRecord(String proofPresence,String proofExtesnsion, ByteString ciphertext){
 		DecryptionRequest request = DecryptionRequest.newBuilder().setProofOfExtension(proofExtesnsion)
 				.setProofOfPresence(proofPresence).setCiphertext(ciphertext).build();
-		System.out.println("build request - clientrpc");
 		try{
 			 return blockingStub.decryptRecord(request);
 			

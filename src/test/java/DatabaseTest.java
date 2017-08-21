@@ -44,22 +44,7 @@ public class DatabaseTest {
 			fail("connection failed");
 		}
 	}
-	//	@Test
-	//	public void testGetPow2(){
-	//		assertEquals(4,getPowOf2(3));
-	//	}
-	//	@Test
-	//	public void testGetPow21(){
-	//		assertEquals(4,getPowOf2(4));
-	//	}
-	//	@Test
-	//	public void testGetPow22(){
-	//		assertEquals(8,getPowOf2(6));
-	//	}
-	//	@Test
-	//	public void testGetPow23(){
-	//		assertEquals(8,getPowOf2(7));
-	//	}
+
 	@Test
 	public void testGetPow24(){
 		assertEquals(8,getPowOf2(8));
