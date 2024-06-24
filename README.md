@@ -1,5 +1,5 @@
 # AccountableDecryption
-A system for making decryption accountable
+A system for making decryption accountable. A Masters dissertation project. See the PDF for the full write up 
 
 Contains 4 main parts - 
 A java  servlet webserver - Hosts a static web site - recieves decrpytion requests and adds to a merkel tree stored in a database.
